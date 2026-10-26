@@ -1,0 +1,18 @@
+# Información financiera confidencial
+*.xlsx
+*.xls
+*.csv
+
+# Resultados generados
+resultados/
+SALIDA/
+
+# Archivos temporales de Python
+_pycache_/
+*.pyc
+.venv/
+venv/
+
+# Variables de entorno
+.env
+.env.*
