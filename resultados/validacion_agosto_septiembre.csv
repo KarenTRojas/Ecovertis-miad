@@ -1,0 +1,81 @@
+﻿serie,modelo,parque,mes,observado_cop,predicho_cop
+ingresos,ultimo_mes,acacias,8,1890725557.0,1787468172.0
+ingresos,ultimo_mes,acacias,9,2613720897.0,1890725557.0
+ingresos,ultimo_mes,neiva,8,410722561.0,381961464.0
+ingresos,ultimo_mes,neiva,9,467963368.0,410722561.0
+ingresos,ultimo_mes,puerto gaitan,8,376066629.0,327705193.0
+ingresos,ultimo_mes,puerto gaitan,9,423350157.0,376066629.0
+ingresos,ultimo_mes,putumayo,8,13500830.0,12790276.0
+ingresos,ultimo_mes,putumayo,9,10062780.0,13500830.0
+ingresos,ultimo_mes,tanques,8,0.0,12703224.0
+ingresos,ultimo_mes,tanques,9,22229841.0,0.0
+ingresos,promedio_2_meses,acacias,8,1890725557.0,2052491760.5
+ingresos,promedio_2_meses,acacias,9,2613720897.0,1839096864.5
+ingresos,promedio_2_meses,neiva,8,410722561.0,285272678.0
+ingresos,promedio_2_meses,neiva,9,467963368.0,396342012.5
+ingresos,promedio_2_meses,puerto gaitan,8,376066629.0,354231858.5
+ingresos,promedio_2_meses,puerto gaitan,9,423350157.0,351885911.0
+ingresos,promedio_2_meses,putumayo,8,13500830.0,16379930.0
+ingresos,promedio_2_meses,putumayo,9,10062780.0,13145553.0
+ingresos,promedio_2_meses,tanques,8,0.0,6351612.0
+ingresos,promedio_2_meses,tanques,9,22229841.0,6351612.0
+ingresos,ridge,acacias,8,1890725557.0,818749024.48
+ingresos,ridge,acacias,9,2613720897.0,705358416.11
+ingresos,ridge,neiva,8,410722561.0,160488155.05
+ingresos,ridge,neiva,9,467963368.0,142195279.33
+ingresos,ridge,puerto gaitan,8,376066629.0,174955800.38
+ingresos,ridge,puerto gaitan,9,423350157.0,151462714.21
+ingresos,ridge,putumayo,8,13500830.0,14879269.93
+ingresos,ridge,putumayo,9,10062780.0,12749865.06
+ingresos,ridge,tanques,8,0.0,3186.32
+ingresos,ridge,tanques,9,22229841.0,3120.07
+ingresos,random_forest,acacias,8,1890725557.0,2271853965.45
+ingresos,random_forest,acacias,9,2613720897.0,2271853965.45
+ingresos,random_forest,neiva,8,410722561.0,264300682.96
+ingresos,random_forest,neiva,9,467963368.0,332177897.36
+ingresos,random_forest,puerto gaitan,8,376066629.0,358532022.43
+ingresos,random_forest,puerto gaitan,9,423350157.0,343793418.52
+ingresos,random_forest,putumayo,8,13500830.0,15056503.31
+ingresos,random_forest,putumayo,9,10062780.0,15056503.31
+ingresos,random_forest,tanques,8,0.0,7945.31
+ingresos,random_forest,tanques,9,22229841.0,4619.5
+opex_ajustado,ultimo_mes,acacias,8,1470255811.89,1256525593.15
+opex_ajustado,ultimo_mes,acacias,9,1819802251.08,1470255811.89
+opex_ajustado,ultimo_mes,neiva,8,268161693.39,298283631.23
+opex_ajustado,ultimo_mes,neiva,9,346171935.15,268161693.39
+opex_ajustado,ultimo_mes,puerto gaitan,8,306788394.98,260585206.64
+opex_ajustado,ultimo_mes,puerto gaitan,9,329041474.25,306788394.98
+opex_ajustado,ultimo_mes,putumayo,8,48263142.46,51363966.79
+opex_ajustado,ultimo_mes,putumayo,9,50490781.83,48263142.46
+opex_ajustado,ultimo_mes,tanques,8,3674269.22,6161412.25
+opex_ajustado,ultimo_mes,tanques,9,21156766.89,3674269.22
+opex_ajustado,promedio_2_meses,acacias,8,1470255811.89,1288928321.16
+opex_ajustado,promedio_2_meses,acacias,9,1819802251.08,1363390702.52
+opex_ajustado,promedio_2_meses,neiva,8,268161693.39,253108820.29
+opex_ajustado,promedio_2_meses,neiva,9,346171935.15,283222662.31
+opex_ajustado,promedio_2_meses,puerto gaitan,8,306788394.98,277832351.25
+opex_ajustado,promedio_2_meses,puerto gaitan,9,329041474.25,283686800.81
+opex_ajustado,promedio_2_meses,putumayo,8,48263142.46,62912139.75
+opex_ajustado,promedio_2_meses,putumayo,9,50490781.83,49813554.63
+opex_ajustado,promedio_2_meses,tanques,8,3674269.22,3242410.12
+opex_ajustado,promedio_2_meses,tanques,9,21156766.89,4917840.73
+opex_ajustado,ridge,acacias,8,1470255811.89,750574432.59
+opex_ajustado,ridge,acacias,9,1819802251.08,689683574.61
+opex_ajustado,ridge,neiva,8,268161693.39,186424027.2
+opex_ajustado,ridge,neiva,9,346171935.15,166953138.39
+opex_ajustado,ridge,puerto gaitan,8,306788394.98,183013153.7
+opex_ajustado,ridge,puerto gaitan,9,329041474.25,167440894.95
+opex_ajustado,ridge,putumayo,8,48263142.46,48303408.22
+opex_ajustado,ridge,putumayo,9,50490781.83,41299848.2
+opex_ajustado,ridge,tanques,8,3674269.22,3128693.62
+opex_ajustado,ridge,tanques,9,21156766.89,3123192.97
+opex_ajustado,random_forest,acacias,8,1470255811.89,1340904906.29
+opex_ajustado,random_forest,acacias,9,1819802251.08,1343473526.87
+opex_ajustado,random_forest,neiva,8,268161693.39,285797229.4
+opex_ajustado,random_forest,neiva,9,346171935.15,305422903.77
+opex_ajustado,random_forest,puerto gaitan,8,306788394.98,284809534.01
+opex_ajustado,random_forest,puerto gaitan,9,329041474.25,278166248.04
+opex_ajustado,random_forest,putumayo,8,48263142.46,63667896.99
+opex_ajustado,random_forest,putumayo,9,50490781.83,61477672.83
+opex_ajustado,random_forest,tanques,8,3674269.22,4073003.29
+opex_ajustado,random_forest,tanques,9,21156766.89,1653299.33

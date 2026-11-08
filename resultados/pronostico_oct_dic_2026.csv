@@ -1,0 +1,31 @@
+﻿periodo,mes,parque,variable,pronostico_cop,modelo_seleccionado
+10. Octubre,10,acacias,ingresos,2613720897.0,ultimo_mes
+11. Noviembre,11,acacias,ingresos,2613720897.0,ultimo_mes
+12. Diciembre,12,acacias,ingresos,2613720897.0,ultimo_mes
+10. Octubre,10,neiva,ingresos,467963368.0,ultimo_mes
+11. Noviembre,11,neiva,ingresos,467963368.0,ultimo_mes
+12. Diciembre,12,neiva,ingresos,467963368.0,ultimo_mes
+10. Octubre,10,puerto gaitan,ingresos,423350157.0,ultimo_mes
+11. Noviembre,11,puerto gaitan,ingresos,423350157.0,ultimo_mes
+12. Diciembre,12,puerto gaitan,ingresos,423350157.0,ultimo_mes
+10. Octubre,10,putumayo,ingresos,10062780.0,ultimo_mes
+11. Noviembre,11,putumayo,ingresos,10062780.0,ultimo_mes
+12. Diciembre,12,putumayo,ingresos,10062780.0,ultimo_mes
+10. Octubre,10,tanques,ingresos,22229841.0,ultimo_mes
+11. Noviembre,11,tanques,ingresos,22229841.0,ultimo_mes
+12. Diciembre,12,tanques,ingresos,22229841.0,ultimo_mes
+10. Octubre,10,acacias,opex_ajustado,1819802251.08,ultimo_mes
+11. Noviembre,11,acacias,opex_ajustado,1819802251.08,ultimo_mes
+12. Diciembre,12,acacias,opex_ajustado,1819802251.08,ultimo_mes
+10. Octubre,10,neiva,opex_ajustado,346171935.15,ultimo_mes
+11. Noviembre,11,neiva,opex_ajustado,346171935.15,ultimo_mes
+12. Diciembre,12,neiva,opex_ajustado,346171935.15,ultimo_mes
+10. Octubre,10,puerto gaitan,opex_ajustado,329041474.25,ultimo_mes
+11. Noviembre,11,puerto gaitan,opex_ajustado,329041474.25,ultimo_mes
+12. Diciembre,12,puerto gaitan,opex_ajustado,329041474.25,ultimo_mes
+10. Octubre,10,putumayo,opex_ajustado,50490781.83,ultimo_mes
+11. Noviembre,11,putumayo,opex_ajustado,50490781.83,ultimo_mes
+12. Diciembre,12,putumayo,opex_ajustado,50490781.83,ultimo_mes
+10. Octubre,10,tanques,opex_ajustado,21156766.89,ultimo_mes
+11. Noviembre,11,tanques,opex_ajustado,21156766.89,ultimo_mes
+12. Diciembre,12,tanques,opex_ajustado,21156766.89,ultimo_mes

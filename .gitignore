@@ -16,3 +16,11 @@ venv/
 # Variables de entorno
 .env
 .env.*
+# Registros locales de experimentos
+mlruns/
+.DS_Store
+
+# Resultados del tablero
+!resultados/
+resultados/*
+!resultados/*.csv

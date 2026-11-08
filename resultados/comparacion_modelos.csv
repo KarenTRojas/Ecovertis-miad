@@ -1,0 +1,9 @@
+﻿serie,modelo,mae_millones_cop,rmse_millones_cop,wape_pct,n_validacion
+ingresos,ultimo_mes,104.698,232.966,16.81,10
+ingresos,promedio_2_meses,125.495,255.533,20.15,10
+ingresos,ridge,405.564,712.362,65.12,10
+ingresos,random_forest,113.108,175.831,18.16,10
+opex_ajustado,ultimo_mes,76.516,133.346,16.41,10
+opex_ajustado,promedio_2_meses,82.205,157.72,17.63,10
+opex_ajustado,ridge,242.394,433.1,51.97,10
+opex_ajustado,random_forest,78.321,157.925,16.79,10
