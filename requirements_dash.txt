@@ -1,0 +1,4 @@
+# Dependencias únicamente de la interfaz Dash; sin MLflow ni scikit-learn.
+dash==2.18.2
+plotly==5.24.1
+requests==2.32.3

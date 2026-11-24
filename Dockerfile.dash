@@ -1,0 +1,23 @@
+# Dashboard Dash de Ecovertis, independiente de MLflow y de los modelos .joblib.
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+WORKDIR /app
+
+COPY requirements_dash.txt ./
+RUN pip install --no-cache-dir -r requirements_dash.txt
+
+COPY tablero_ecovertis.py ./
+COPY assets/ ./assets/
+COPY resultados/ ./resultados/
+
+RUN useradd --create-home --shell /usr/sbin/nologin appuser \
+    && chown -R appuser:appuser /app
+USER appuser
+
+EXPOSE 8050
+# El tablero original enlaza 127.0.0.1 solo dentro de su __main__.
+# Importar app y arrancarlo en 0.0.0.0 permite acceso entre contenedores
+# sin alterar tablero_ecovertis.py, archivo que modificará Karen.
+CMD ["python", "-c", "from tablero_ecovertis import app; app.run_server(host='0.0.0.0', port=8050, debug=False)"]
