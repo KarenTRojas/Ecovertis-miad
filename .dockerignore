@@ -1,0 +1,21 @@
+# Reducir contexto de construcción y evitar publicar material local.
+.git/
+.dvc/
+.venv/
+.venv-*/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pem
+*.key
+.env
+.env.*
+**/.DS_Store
+*.zip
+*.pptx
+*.pdf
+*.docx
+*.xlsx
+*.ipynb
+docs/
+private/
