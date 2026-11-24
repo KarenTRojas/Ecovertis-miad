@@ -4,6 +4,9 @@ Arrancar: python tablero_ecovertis.py
 Abrir: http://127.0.0.1:8050
 """
 from __future__ import annotations
+
+import os
+import requests
 import csv
 from collections import defaultdict
 from pathlib import Path
@@ -14,9 +17,31 @@ from plotly.subplots import make_subplots
 
 BASE = Path(__file__).resolve().parent
 DATA = BASE / 'resultados'
+API_URL = os.getenv(
+    'ECO_API_URL',
+    'http://127.0.0.1:8001'
+).rstrip('/')
 PARKS = ['acacias','neiva','puerto gaitan','putumayo','tanques']
 MONTH_NAMES = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic']
 
+def consultar_pronostico(parque, serie, modelo):
+    try:
+        respuesta = requests.post(
+            f'{API_URL}/pronosticar',
+            json={
+                'parque': parque,
+                'serie': serie,
+                'modelo': modelo
+            },
+            timeout=20
+        )
+        respuesta.raise_for_status()
+        return respuesta.json()
+
+    except requests.exceptions.RequestException as error:
+        raise RuntimeError(
+            'No fue posible consultar la API de pronósticos.'
+        ) from error
 
 def rows(name):
     p=DATA/name
@@ -64,14 +89,22 @@ def build_historical(parque, proyecto):
     return by
 
 
-def build_forecast(parque, proyecto):
-    by=defaultdict(lambda:[0.0,0.0])
-    if proyecto != 'todos':return by
-    for r in FORECAST:
-        if parque!='todos' and r['parque']!=parque:continue
-        m=int(r['mes'])
-        j=0 if r['variable']=='ingresos' else 1
-        by[m][j]+=num(r['pronostico_cop'])
+def build_forecast(parque, proyecto, modelo='random_forest'):
+    by = defaultdict(lambda: [0.0, 0.0])
+
+    if proyecto != 'todos':
+        return by
+
+    parques = PARKS if parque == 'todos' else [parque]
+
+    for p in parques:
+        for j, serie in enumerate(['ingresos', 'opex_ajustado']):
+            respuesta = consultar_pronostico(p, serie, modelo)
+
+            for r in respuesta['pronosticos']:
+                m = int(r['mes'])
+                by[m][j] += float(r['prediccion_cop'])
+
     return by
 
 
@@ -84,7 +117,7 @@ def card(title, value, note):
     return html.Div(className='kpi',children=[html.Div(title,className='kpi-label'),html.Div(value,className='kpi-value'),html.Div(note,className='kpi-note')])
 
 
-def evolution_chart(history,forecast,mostrar):
+def evolution_chart(history,forecast,mostrar,serie='ambas'):
     fig=make_subplots(specs=[[{'secondary_y':True}]])
     if mostrar!='proyeccion':
         months=sorted(history)
@@ -99,6 +132,13 @@ def evolution_chart(history,forecast,mostrar):
     fig.update_layout(height=410,margin={'l':40,'r':48,'t':20,'b':50},barmode='group',legend={'orientation':'h','y':-0.18},plot_bgcolor='#fff',paper_bgcolor='#fff',font={'family':'Arial','color':'#1b3d32'})
     fig.update_yaxes(title_text='Millones de COP',secondary_y=False,gridcolor='#e6efea',rangemode='tozero')
     fig.update_yaxes(title_text='Margen (%)',secondary_y=True,showgrid=False)
+    if serie != 'ambas':
+        prefijo = 'Ingresos' if serie == 'ingresos' else 'OPEX'
+
+        for traza in fig.data:
+            traza.visible = traza.name.startswith(prefijo)
+
+        fig.update_yaxes(visible=False, secondary_y=True)
     return fig
 
 
@@ -127,6 +167,32 @@ app.layout=html.Div([
             html.Div([html.Label('Parque ecológico'),dcc.Dropdown(id='parque',options=[{'label':'Todos los parques','value':'todos'}]+[{'label':park_label(p),'value':p} for p in PARKS],value='todos',clearable=False)],className='filter'),
             html.Div([html.Label('Proyecto'),dcc.Dropdown(id='proyecto',options=[{'label':'Todos los proyectos','value':'todos'}],value='todos',clearable=False)],className='filter'),
             html.Div([html.Label('Período a visualizar'),dcc.Dropdown(id='periodo',options=[{'label':'Histórico y pronóstico','value':'ambos'},{'label':'Solo histórico','value':'historico'},{'label':'Solo pronóstico','value':'proyeccion'}],value='ambos',clearable=False)],className='filter'),
+            html.Div([
+    html.Label('Serie financiera'),
+    dcc.Dropdown(
+        id='serie',
+        options=[
+            {'label': 'Ingresos y OPEX', 'value': 'ambas'},
+            {'label': 'Ingresos', 'value': 'ingresos'},
+            {'label': 'OPEX ajustado', 'value': 'opex_ajustado'}
+        ],
+        value='ambas',
+        clearable=False
+    )
+]),
+html.Div([
+    html.Label('Modelo de pronóstico'),
+    dcc.Dropdown(
+        id='modelo',
+        options=[
+            {'label': 'Ridge', 'value': 'ridge'},
+            {'label': 'Random Forest', 'value': 'random_forest'}
+        ],
+        value='random_forest',
+        clearable=False
+    )
+]),
+        
         ],className='filters'),
         html.Div(id='kpis',className='kpis'),
         html.Div([
@@ -148,10 +214,28 @@ def proyectos_de_parque(parque):
             opts[ident]=f'{ident} · {nombre}' if nombre else ident
     return ([{'label':'Todos los proyectos','value':'todos'}]+[{'label':lab,'value':key} for key,lab in sorted(opts.items())],'todos')
 
-@app.callback(Output('kpis','children'),Output('evolucion','figure'),Output('costos','figure'),Output('nota-modelos','children'),Output('model_table','children'), Input('parque','value'),Input('proyecto','value'),Input('periodo','value'))
-def actualizar(parque,proyecto,periodo):
+@app.callback(
+    Output('kpis', 'children'),
+    Output('evolucion', 'figure'),
+    Output('costos', 'figure'),
+    Output('nota-modelos', 'children'),
+    Output('model_table', 'children'),
+    Input('parque', 'value'),
+    Input('proyecto', 'value'),
+    Input('periodo', 'value'),
+    Input('serie', 'value'),
+    Input('modelo', 'value')
+)
+def actualizar(parque, proyecto, periodo, serie, modelo):
     hist=build_historical(parque,proyecto)
-    pron=build_forecast(parque,proyecto)
+    pron = {}
+    error_api = False
+
+    if periodo != 'historico':
+        try:
+            pron = build_forecast(parque, proyecto, modelo)
+        except RuntimeError:
+            error_api = True
     if periodo=='historico':used=hist;nota='Histórico: enero a septiembre de 2026.'
     elif periodo=='proyeccion':used=pron;nota='Pronósticos experimentales: octubre a diciembre de 2026.'
     else:
@@ -160,8 +244,24 @@ def actualizar(parque,proyecto,periodo):
         nota+=' No hay pronóstico por proyecto: la muestra mensual es insuficiente para justificar ese nivel de desagregación.'
     ing,cost,result,margin=finance_sum(used)
     cards=[card('Ingresos',money(ing),'COP · período seleccionado'),card('OPEX ajustado',money(cost),'COP · incluye distribución de Operaciones'),card('Resultado estimado',money(result),'Ingresos menos OPEX ajustado'),card('Margen estimado',f'{margin:,.1f}%'.replace('.',',') if margin is not None else 'N/D','No representa utilidad neta')]
-    fig=evolution_chart(hist,pron,periodo)
+    fig=evolution_chart(hist,pron,periodo,serie)
     table=html.Table([html.Thead(html.Tr([html.Th('Variable'),html.Th('Modelo'),html.Th('MAE (M COP)'),html.Th('WAPE')]))]+[html.Tbody([html.Tr([html.Td('Ingresos' if r['serie']=='ingresos' else 'OPEX'),html.Td(r['modelo']),html.Td(r['mae_millones_cop']),html.Td(f"{r['wape_pct']}%")]) for r in COMPARE])])
+    if error_api:
+        nota = 'Advertencia: API no disponible. Pronósticos no disponibles.'
+
+        if periodo != 'proyeccion':
+            nota += ' Los indicadores muestran únicamente datos históricos.'
+
+    if periodo == 'proyeccion' and not pron:
+        cards = [
+            card(titulo, 'N/D', 'Pronóstico no disponible')
+            for titulo in [
+                'Ingresos',
+                'OPEX ajustado',
+                'Resultado estimado',
+                'Margen estimado'
+            ]
+        ]
     return cards,fig,cost_chart(parque),nota,table
 
 if __name__=='__main__':
